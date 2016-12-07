@@ -1,0 +1,63 @@
+#sala{
+    width: 100%;
+    height: 600px;
+    border: solid black 2px;
+    padding: 5px;
+}
+
+.seleccionado{
+    border: solid navy 3px;
+}
+
+.mesa {
+    width: 150px;
+    height: auto;
+    padding: 0.5em;
+    float: left;
+    margin: 0 10px 10px 0;
+    cursor: pointer;
+    border: solid navy 1px;
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    border: solid navy 1px;
+    cursor: pointer;
+}
+
+.circle100 {
+    width: 100px;
+    height: 100px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+.circle120 {
+    width: 120px;
+    height: 120px;
+    -moz-border-radius: 60px;
+    -webkit-border-radius: 60px;
+    border-radius: 60px;
+    cursor: pointer;
+}
+.circle140 {
+    width: 140px;
+    height: 140px;
+    -moz-border-radius: 70px;
+    -webkit-border-radius: 70px;
+    border-radius: 70px;
+    cursor: pointer;
+}
+.circle160 {
+    width: 160px;
+    height: 160px;
+    -moz-border-radius: 80px;
+    -webkit-border-radius: 80px;
+    border-radius: 80px;
+    cursor: pointer;
+}
