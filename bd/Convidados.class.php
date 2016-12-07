@@ -28,206 +28,203 @@ class Convidados extends BDMySQL
         return $retorno;
     }
 
-    function eliminarProduto($id)
+
+    function inserirMesa($id, $nome, $lugares)
     {
-        $sql = "delete from produto where id='$id'";
+        $sql = "insert into mesas (id, nome, lugares) values ('$id','$nome','$lugares')";
         if ($this->bd->executarSQL($sql))
             return true;
         else
             return false;
     }
 
-    function listarCategorias()
+    function editarMesa($id, $lugares)
     {
-        $sql = "SELECT * FROM categoria WHERE activo=1";
-        echo $this->bd->executarSQL_T($sql);
-    }
-
-    function contadorProdutos(){
-        $sql = "SELECT COUNT(*) FROM produto";
-        $resultado = $this->bd->executarSQL($sql);
-        $result = $resultado->fetch();
-//        $this->endEncomenda();
-        return $result[0];
-    }
-
-    /*function introduzirUtilizador($password, $nivel, $email, $contato, $nome, $hospital,$precoKm, $precoVisita)
-    {
-        $sql = "insert into utilizador (truque, nivel, email, telefone, nome, hospital, precoKm, precoVisita)values ('$password','$nivel','$email','$contato','$nome','$hospital','$precoKm','$precoVisita')";
+        $sql = "update mesas set lugares='$lugares' where id='$id'";
         if ($this->bd->executarSQL($sql))
             return true;
         else
             return false;
     }
 
-    function verificarExisteEmail($email)
+    function editarPosicaoMesa($id, $x, $y)
     {
-        $email = trim($email);
-        $sql = "select * from utilizador where email = '$email'";
-        if (($this->bd->executarSQL($sql))) {
-            $rs = $this->bd->executarSQL($sql);
-            if ($rs->fetch(PDO::FETCH_ASSOC) == false) {
-                return false;
+        $sql = "update mesas set x='$x', y='$y' where id='$id'";
+        if ($this->bd->executarSQL($sql))
+            return true;
+        else
+            return false;
+    }
+
+    /*
+        function verificarExisteEmail($email)
+        {
+            $email = trim($email);
+            $sql = "select * from utilizador where email = '$email'";
+            if (($this->bd->executarSQL($sql))) {
+                $rs = $this->bd->executarSQL($sql);
+                if ($rs->fetch(PDO::FETCH_ASSOC) == false) {
+                    return false;
+                } else {
+                    return true;
+                }
             } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    function alterarUtilizador($id, $email, $contato, $nome, $precoKm, $precoVisita)
-    {
-        $sql = "update utilizador set precoKm='$precoKm', precoVisita='$precoVisita', email='$email', telefone='$contato', nome='$nome' where id='$id'";
-        if ($this->bd->executarSQL($sql))
-            return true;
-        else
-            return false;
-    }
-
-    function alterarPassUtilizador($id, $pass)
-    {
-        $sql = "update utilizador set truque='$pass' where id='$id'";
-        if ($this->bd->executarSQL($sql))
-            return true;
-        else
-            return false;
-    }
-
-    function eliminarUtilizador($id)
-    {
-        $sql = "delete from utilizador where id='$id'";
-        if ($this->bd->executarSQL($sql))
-            return true;
-        else
-            return false;
-    }
-
-    function verificarExisteUtilizador($email, $password)
-    {
-        $email = trim($email);
-        $password = trim($password);
-        $sql = "select * from utilizador where email = '$email' and truque = '$password'";
-        if (($this->bd->executarSQL($sql))) {
-            $rs = $this->bd->executarSQL($sql);
-            if ($rs->fetch(PDO::FETCH_ASSOC) == false) {
                 return false;
-            } else {
-                return true;
             }
-        } else {
-            return false;
         }
-    }
 
-    function verificarUtilizadorAtivo($email)
-    {
-        $sql = "select activo from utilizador where email = '$email'";
-        $resultado = $this->bd->executarSQL($sql);
-        $result = $resultado->fetch();
-        return $result[0];
-        $this->endUtilizador();
-    }
-
-    function verificarNomePorEmail($email)
-    {
-        $sql = "select nome from utilizador where email = '$email'";
-        $resultado = $this->bd->executarSQL($sql);
-        $result = $resultado->fetch();
-        return $result[0];
-        $this->endUtilizador();
-    }
-
-    function verificarNomePorId($id)
-    {
-        $sql = "select nome from utilizador where id = '$id'";
-        $resultado = $this->bd->executarSQL($sql);
-        $result = $resultado->fetch();
-        return $result[0];
-        $this->endUtilizador();
-    }
-
-    function verificarEmailPorId($id)
-    {
-        $sql = "select email from utilizador where id = '$id'";
-        $resultado = $this->bd->executarSQL($sql);
-        $result = $resultado->fetch();
-        return $result[0];
-        $this->endUtilizador();
-    }
-
-    function verificarIdPorEmail($email)
-    {
-        $sql = "select id from utilizador where email = '$email'";
-        $resultado = $this->bd->executarSQL($sql);
-        $result = $resultado->fetch();
-        return $result[0];
-        $this->endUtilizador();
-    }
-
-    function saberPrecoKmDomicare($id)
-    {
-        $sql = "select precoKm from utilizador where id = '$id'";
-        $resultado = $this->bd->executarSQL($sql);
-        $result = $resultado->fetch();
-        return $result[0];
-        $this->endUtilizador();
-    }
-
-    function saberPrecoVisitaDomicare($id)
-    {
-        $sql = "select precoVisita from utilizador where id = '$id'";
-        $resultado = $this->bd->executarSQL($sql);
-        $result = $resultado->fetch();
-        return $result[0];
-        $this->endUtilizador();
-    }
-
-    function guardarVisita($email)
-    {
-        $sql = "update utilizador set data_visita=now(), contador_visitas=contador_visitas+1 where email='$email'";
-        if ($this->bd->executarSQL($sql))
-            return true;
-        else
-            return false;
-    }
-
-
-    
-
-
-    function verificarNivel($email)
-    {
-        $email = trim($email);
-        $sql = "select nivel from utilizador where email = '$email'";
-        $resultado = $this->bd->executarSQL($sql);
-        $result = $resultado->fetch();
-        return $result['nivel'];
-    }
-
-    function verificarHospitalId($email)
-    {
-        $email = trim($email);
-        $sql = "select hospital from utilizador where email = '$email'";
-        $resultado = $this->bd->executarSQL($sql);
-        $result = $resultado->fetch();
-        return $result['hospital'];
-    }
-
-    function verificarNivelUtilizador($nivel)
-    {
-        if ($nivel == 0) {
-            $resultado = "Super Administrador";
+        function alterarUtilizador($id, $email, $contato, $nome, $precoKm, $precoVisita)
+        {
+            $sql = "update utilizador set precoKm='$precoKm', precoVisita='$precoVisita', email='$email', telefone='$contato', nome='$nome' where id='$id'";
+            if ($this->bd->executarSQL($sql))
+                return true;
+            else
+                return false;
         }
-        elseif ($nivel == 1) {
-            $resultado = "Administrador";
-        } elseif ($nivel == 2) {
-            $resultado = "Enf. Domicare";
-        }elseif ($nivel == 3) {
-            $resultado = "Prof. de Saúde";
+
+        function alterarPassUtilizador($id, $pass)
+        {
+            $sql = "update utilizador set truque='$pass' where id='$id'";
+            if ($this->bd->executarSQL($sql))
+                return true;
+            else
+                return false;
         }
-        return $resultado;
-    }*/
+
+        function eliminarUtilizador($id)
+        {
+            $sql = "delete from utilizador where id='$id'";
+            if ($this->bd->executarSQL($sql))
+                return true;
+            else
+                return false;
+        }
+
+        function verificarExisteUtilizador($email, $password)
+        {
+            $email = trim($email);
+            $password = trim($password);
+            $sql = "select * from utilizador where email = '$email' and truque = '$password'";
+            if (($this->bd->executarSQL($sql))) {
+                $rs = $this->bd->executarSQL($sql);
+                if ($rs->fetch(PDO::FETCH_ASSOC) == false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        function verificarUtilizadorAtivo($email)
+        {
+            $sql = "select activo from utilizador where email = '$email'";
+            $resultado = $this->bd->executarSQL($sql);
+            $result = $resultado->fetch();
+            return $result[0];
+            $this->endUtilizador();
+        }
+
+        function verificarNomePorEmail($email)
+        {
+            $sql = "select nome from utilizador where email = '$email'";
+            $resultado = $this->bd->executarSQL($sql);
+            $result = $resultado->fetch();
+            return $result[0];
+            $this->endUtilizador();
+        }
+
+        function verificarNomePorId($id)
+        {
+            $sql = "select nome from utilizador where id = '$id'";
+            $resultado = $this->bd->executarSQL($sql);
+            $result = $resultado->fetch();
+            return $result[0];
+            $this->endUtilizador();
+        }
+
+        function verificarEmailPorId($id)
+        {
+            $sql = "select email from utilizador where id = '$id'";
+            $resultado = $this->bd->executarSQL($sql);
+            $result = $resultado->fetch();
+            return $result[0];
+            $this->endUtilizador();
+        }
+
+        function verificarIdPorEmail($email)
+        {
+            $sql = "select id from utilizador where email = '$email'";
+            $resultado = $this->bd->executarSQL($sql);
+            $result = $resultado->fetch();
+            return $result[0];
+            $this->endUtilizador();
+        }
+
+        function saberPrecoKmDomicare($id)
+        {
+            $sql = "select precoKm from utilizador where id = '$id'";
+            $resultado = $this->bd->executarSQL($sql);
+            $result = $resultado->fetch();
+            return $result[0];
+            $this->endUtilizador();
+        }
+
+        function saberPrecoVisitaDomicare($id)
+        {
+            $sql = "select precoVisita from utilizador where id = '$id'";
+            $resultado = $this->bd->executarSQL($sql);
+            $result = $resultado->fetch();
+            return $result[0];
+            $this->endUtilizador();
+        }
+
+        function guardarVisita($email)
+        {
+            $sql = "update utilizador set data_visita=now(), contador_visitas=contador_visitas+1 where email='$email'";
+            if ($this->bd->executarSQL($sql))
+                return true;
+            else
+                return false;
+        }
+
+
+
+
+
+        function verificarNivel($email)
+        {
+            $email = trim($email);
+            $sql = "select nivel from utilizador where email = '$email'";
+            $resultado = $this->bd->executarSQL($sql);
+            $result = $resultado->fetch();
+            return $result['nivel'];
+        }
+
+        function verificarHospitalId($email)
+        {
+            $email = trim($email);
+            $sql = "select hospital from utilizador where email = '$email'";
+            $resultado = $this->bd->executarSQL($sql);
+            $result = $resultado->fetch();
+            return $result['hospital'];
+        }
+
+        function verificarNivelUtilizador($nivel)
+        {
+            if ($nivel == 0) {
+                $resultado = "Super Administrador";
+            }
+            elseif ($nivel == 1) {
+                $resultado = "Administrador";
+            } elseif ($nivel == 2) {
+                $resultado = "Enf. Domicare";
+            }elseif ($nivel == 3) {
+                $resultado = "Prof. de Saúde";
+            }
+            return $resultado;
+        }*/
 
     function endProduto()
     {

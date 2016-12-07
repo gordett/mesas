@@ -28,8 +28,19 @@ $(document).ready(function () {
             "<i class='fa fa-users fa-3x' aria-hidden='true'></i>" +
             "<button type='button' class='btn btn-danger btn-sm'>Convidados <span class='tag-pill tag-warning'></span></button></div>");
         var lugares = $("#sala").children('div').attr('lugares');
-        var mesaCriada = $("#sala").children('div');
-        $("#sala").find('span').text('0/'+lugares);
+
+        $.ajax({
+            url: 'trata.php',
+            type: 'post',
+            data: {id: contadorMesas, nome: mesa, lugares: lugares, accao: 'inserirMesa'},
+            success: function (result) {
+                if (result){
+                    $("#sala").find('span').text('0/'+lugares);
+                }
+            }
+        });
+
+
         $( ".mesa" ).draggable({
             containment: "#sala",
             scroll: false,
@@ -37,7 +48,15 @@ $(document).ready(function () {
                 var offset = $(this).offset();
                 var xPos = offset.left;
                 var yPos = offset.top;
-                console.log('id: '+$(this).attr('id')+ ' x: ' + xPos + ' y: ' + yPos);
+                var id = $(this).attr('id');
+                $.ajax({
+                    url: 'trata.php',
+                    type: 'post',
+                    data: {id: id, x: xPos, y: yPos, accao: 'editarPosicaoMesa'},
+                    success: function (result) {
+                        console.log('id: '+ id + ' x: ' + xPos + ' y: ' + yPos);
+                    }
+                });
             }
         });
         $('.mesa').droppable({
@@ -59,7 +78,6 @@ $(document).ready(function () {
                 var offset = $(this).offset();
                 var xPos = offset.left;
                 var yPos = offset.top;
-                console.log('id: '+$(this).attr('id')+ ' x: ' + xPos + ' y: ' + yPos);
 
             }
         });
@@ -89,11 +107,17 @@ function arranque(table) {
 
 
 
-function alterarMesa(valor, mesaz) {
+function alterarMesa(valor) {
 
-    var x = mesaz;
-
-        $("#"+mesa).find('span').text('0/'+valor);
+    $.ajax({
+        url: 'trata.php',
+        type: 'post',
+        data: {id: mesa, lugares: valor, accao: 'editarMesa'},
+        success: function (result) {
+            alert(result);
+            $("#sala div#"+mesa).attr('lugares',valor).find('span').text('0/'+valor);
+        }
+    });
 
 }
 

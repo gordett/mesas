@@ -12,7 +12,7 @@
                 <input type="text" id="lugares">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default fechar" onclick="alterarMesa($('#lugares').val(), mesa)" data-dismiss="modal">Alterar</button>
+                <button type="button" class="btn btn-default fechar" onclick="alterarMesa($('#lugares').val())" data-dismiss="modal">Alterar</button>
                 <button type="button" class="btn btn-default fechar" data-dismiss="modal">Close</button>
             </div>
         </div>

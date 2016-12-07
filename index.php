@@ -7,7 +7,7 @@ $rsConvidados = new Convidados();
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-2">
+        <div class="col-lg-3">
             <div class="card">
                 <div class="card-block">
                     <h6 class="card-title text-md-center">Convidados</h6>
@@ -22,7 +22,7 @@ $rsConvidados = new Convidados();
                 </div>
             </div>
         </div>
-        <div class="col-lg-10">
+        <div class="col-lg-9">
             <div id="sala"></div>
         </div>
     </div>
