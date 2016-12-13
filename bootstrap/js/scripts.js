@@ -16,8 +16,6 @@ $(document).ready(function () {
                 convidado.append(" <span class='tag-pill tag-warning pull-right'>Mesa n. "+mesa+"</span>");
             }
         });
-
-
     });
 
     $("#addTable").click(function () {
@@ -35,7 +33,8 @@ $(document).ready(function () {
             data: {id: contadorMesas, nome: mesa, lugares: lugares, accao: 'inserirMesa'},
             success: function (result) {
                 if (result){
-                    $("#sala").find('span').text('0/'+lugares);
+                    alert(result);
+                    // $("#sala").find('span').text('0/'+lugares);
                 }
             }
         });
@@ -99,7 +98,7 @@ function arranque(table) {
 
     mesa = table.id;
 
-    $("#"+mesa).addClass("seleccionado");
+    $("#"+mesa).css("border","2px");
 
     $('#myModal').modal('toggle');
 
@@ -114,7 +113,7 @@ function alterarMesa(valor) {
         type: 'post',
         data: {id: mesa, lugares: valor, accao: 'editarMesa'},
         success: function (result) {
-            alert(result);
+
             $("#sala div#"+mesa).attr('lugares',valor).find('span').text('0/'+valor);
         }
     });
