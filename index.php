@@ -9,7 +9,7 @@ $rsConvidados = new Convidados();
     <div class="row">
         <div class="col-md-12 text-md-center">
 
-            <button id="addCircle" class="btn btn-primary btn-sm">Adiccionar mesa redonda</button>
+<!--            <button id="addCircle" class="btn btn-primary btn-sm">Adiccionar mesa redonda</button>-->
             <button id="addTable" class="btn btn-primary btn-sm">Adiccionar mesa Rectangular</button>
 
         </div>

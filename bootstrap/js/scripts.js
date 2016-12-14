@@ -9,11 +9,14 @@ $(document).ready(function () {
             zIndex: 1000,
             scroll: false,
             stop: function(e) {
-                convidado = $(this);
-                convidado.removeClass('ui-draggable ui-draggable-handle').addClass('btn btn-danger').attr('disabled','disabled');
-                alert(mesa +" convidado : " + convidado.attr('id'));
-                convidado.draggable('disable');
-                convidado.append(" <span class='tag-pill tag-warning pull-right'>Mesa n. "+mesa+"</span>");
+                if (mesa != null){
+                    convidado = $(this);
+                    convidado.removeClass('ui-draggable ui-draggable-handle').addClass('btn btn-danger').attr('disabled','disabled');
+                    convidado.draggable('disable');
+                    convidado.append(" <span class='tag-pill tag-warning pull-right'>Mesa n. "+mesa+"</span>");
+                    mesa = null;
+                }
+
             }
         });
     });
@@ -57,16 +60,15 @@ $(document).ready(function () {
 
                 $('.mesa').droppable({
                     drop: function () {
-                        mesa = $(this).attr('id');
+                        if ($(this).hasClass('mesa')){
+                            mesa = $(this).attr('id');
+                        }else{
+                            mesa = null;
+                        }
                     }
                 });
-
             }
         });
-
-
-
-
     });
 
     $("#addCircle").click(function () {
