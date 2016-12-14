@@ -36,19 +36,25 @@ class BDMySQL {
 	}
 
 	function executarSQLWithID($sql_command) {
-		$resultado=$this->conn->query($sql_command);
-		if($resultado)
-			echo $this->conn->lastInsertId();
-		else
-			return false;
+        try {
+            if ($this->conn->query($sql_command))
+                return $this->conn->lastInsertId();
+            else
+                return false;
+        }
+        catch(PDOException $e)
+        {
+            // roll back the transaction if something failed
+            echo "Error: " . $e->getMessage();
+        }
 	}
 
 	function executarSQL_T_WithID($sql_command) {
 		try {
 			$this->conn->beginTransaction();
-			$this->conn->exec($sql_command);
+			$this->conn->query($sql_command);
 			$this->conn->commit();
-			echo $this->conn->lastInsertId();
+			return $this->conn->lastInsertId();
 		}
 		catch(PDOException $e)
 		{
@@ -56,6 +62,7 @@ class BDMySQL {
 			$this->conn->rollback();
 			echo "Error: " . $e->getMessage();
 		}
+
 	}
 
 	

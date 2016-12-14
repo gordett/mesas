@@ -7,8 +7,7 @@ $rsConvidados = new Convidados();
 switch ($_POST['accao']){
     case 'inserirMesa';
         extract($_POST);
-        $result = $rsConvidados->inserirMesa($id, $nome, $lugares);
-        return $result;
+        echo $result = $rsConvidados->inserirMesa($nome, $lugares);
     break;
 
     case 'editarMesa';

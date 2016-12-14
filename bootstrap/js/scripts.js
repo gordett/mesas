@@ -19,50 +19,53 @@ $(document).ready(function () {
     });
 
     $("#addTable").click(function () {
-        contadorMesas++;
 
-        $("#sala").append("<div ondblclick='arranque(this)' lugares='6' class='mesa text-md-center align-middle' id='"+contadorMesas+"'>" +
-            "<h6>Mesa no. "+contadorMesas+"</h6>" +
-            "<i class='fa fa-users fa-3x' aria-hidden='true'></i>" +
-            "<button type='button' class='btn btn-danger btn-sm'>Convidados <span class='tag-pill tag-warning'></span></button></div>");
-        var lugares = $("#sala").children('div').attr('lugares');
+
 
         $.ajax({
             url: 'trata.php',
             type: 'post',
-            data: {id: contadorMesas, nome: mesa, lugares: lugares, accao: 'inserirMesa'},
+            data: {nome: mesa, lugares: 6, accao: 'inserirMesa'},
             success: function (result) {
-                if (result){
-                    alert(result);
-                    // $("#sala").find('span').text('0/'+lugares);
-                }
-            }
-        });
+                var result = result.trim();
+                    console.log(result);
+                    $("#sala").append("<div ondblclick='arranque(this)' lugares='6' class='mesa text-md-center align-middle'>" +
+                        "<h6 class='nomeMesa"+result+"' onclick='mostraInput("+result+")'><i class='fa fa-terminal' aria-hidden='true'></i> Mesa</h6>" +
+                        "<i class='fa fa-users fa-3x' aria-hidden='true'></i>" +
+                        "<button type='button' class='btn btn-danger btn-sm'>Convidados <span class='tag-pill tag-warning'></span></button></div>")
+                        .find('span').text('0/6');
+                    $("div.mesa:last").attr('id',result);
 
-
-        $( ".mesa" ).draggable({
-            containment: "#sala",
-            scroll: false,
-            stop: function() {
-                var offset = $(this).offset();
-                var xPos = offset.left;
-                var yPos = offset.top;
-                var id = $(this).attr('id');
-                $.ajax({
-                    url: 'trata.php',
-                    type: 'post',
-                    data: {id: id, x: xPos, y: yPos, accao: 'editarPosicaoMesa'},
-                    success: function (result) {
-                        console.log('id: '+ id + ' x: ' + xPos + ' y: ' + yPos);
+                $( ".mesa" ).draggable({
+                    containment: "#sala",
+                    scroll: false,
+                    stop: function() {
+                        var offset = $(this).offset();
+                        var xPos = offset.left;
+                        var yPos = offset.top;
+                        var id = $(this).attr('id');
+                        $.ajax({
+                            url: 'trata.php',
+                            type: 'post',
+                            data: {id: id, x: xPos, y: yPos, accao: 'editarPosicaoMesa'},
+                            success: function (result) {
+                                console.log('id: '+ id + ' x: ' + xPos + ' y: ' + yPos);
+                            }
+                        });
                     }
                 });
+
+                $('.mesa').droppable({
+                    drop: function () {
+                        mesa = $(this).attr('id');
+                    }
+                });
+
             }
         });
-        $('.mesa').droppable({
-            drop: function () {
-                mesa = $(this).attr('id');
-            }
-        });
+
+
+
 
     });
 
@@ -92,7 +95,17 @@ $(document).ready(function () {
             $(this).removeClass("seleccionado");
         });
     });
+
+
 } );
+
+function mostraInput(id) {
+
+        $(".nomeMesa"+id).empty().html("<input style='z-index: 2000;' class='mesaInput"+id+"' onchange='editarNomeMesa("+id+")' size='10'>");
+        $("mesaInput"+id).focus();
+
+}
+
 
 function arranque(table) {
 

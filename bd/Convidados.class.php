@@ -29,10 +29,10 @@ class Convidados extends BDMySQL
     }
 
 
-    function inserirMesa($id, $nome, $lugares)
+    function inserirMesa($nome, $lugares)
     {
-        $sql = "insert into mesas (id, nome, lugares) values ('$id','$nome','$lugares')";
-        return $this->bd->executarSQL_T_WithID($sql);
+        $sql = "insert into mesas (nome, lugares) values ('$nome','$lugares')";
+        return $this->bd->executarSQLWithID($sql);
     }
 
     function editarMesa($id, $lugares)

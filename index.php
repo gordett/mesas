@@ -7,6 +7,14 @@ $rsConvidados = new Convidados();
 
 <div class="container-fluid">
     <div class="row">
+        <div class="col-md-12 text-md-center">
+
+            <button id="addCircle" class="btn btn-primary btn-sm">Adiccionar mesa redonda</button>
+            <button id="addTable" class="btn btn-primary btn-sm">Adiccionar mesa Rectangular</button>
+
+        </div>
+    </div><br>
+    <div class="row">
         <div class="col-lg-3">
             <div class="card">
                 <div class="card-block">
@@ -27,14 +35,7 @@ $rsConvidados = new Convidados();
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12 text-md-center">
 
-                <button id="addCircle" class="btn btn-primary btn-sm">Adiccionar mesa redonda</button>
-                <button id="addTable" class="btn btn-primary btn-sm">Adiccionar mesa Rectangular</button>
-
-        </div>
-    </div>
     <br><br>
 </div>
 
