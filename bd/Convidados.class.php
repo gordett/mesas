@@ -12,8 +12,6 @@ class Convidados extends BDMySQL
         $this->bd->ligarBD($NOME_BD, $USER_BD, $PASS_BD, $SERVER_NAME);
     }
 
-
-
     function listaConvidados()
     {
         $sql = "SELECT * FROM convidados";
@@ -53,6 +51,28 @@ class Convidados extends BDMySQL
             return false;
     }
 
+    function colocarConvidado($id_convidado, $nome_convidado, $id_mesa, $nome_mesa, $lugares)
+    {
+        $sql = "SELECT count(*) FROM composicao where id_mesa='$id_mesa'";
+        $resultado = $this->bd->executarSQL($sql);
+        $result = $resultado->fetch();
+        /*print_r($result[0]);*/
+        if ($result[0] >= $lugares){
+            echo "lugares"; // não existe espaço na mesa para mais convidados
+
+        }else{
+            $sql1 = "insert into composicao (id_convidado, nome_convidado, id_mesa, nome_mesa) values ('$id_convidado','$nome_convidado','$id_mesa','$nome_mesa')";
+
+            if ($this->bd->executarSQL_T($sql1)) {
+                $sql2 = "SELECT count(*) FROM composicao where id_mesa='$id_mesa'";
+                $resultado2 = $this->bd->executarSQL($sql2);
+                $result2 = $resultado2->fetch();
+                echo $result2[0];
+            }else{
+                echo "erro"; //erro ao inserir convidado na mesa
+            }
+        }
+    }
     /*
         function verificarExisteEmail($email)
         {

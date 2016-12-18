@@ -9,20 +9,36 @@ $(document).ready(function () {
             zIndex: 1000,
             scroll: false,
             stop: function(e) {
-                if (mesa != null){
+                if (mesa != null) {
                     convidado = $(this);
-                    convidado.removeClass('ui-draggable ui-draggable-handle').addClass('btn btn-danger').attr('disabled','disabled');
-                    convidado.draggable('disable');
-                    convidado.append(" <span class='tag-pill tag-warning pull-right'>Mesa n. "+mesa+"</span>");
-                    mesa = null;
-                }
+                    console.log(convidado.attr('id')+" - " + convidado.text() + " " + mesa + " " + mesaNome + " " + mesaLugares);
 
+                    $.ajax({
+                        url: 'trata.php',
+                        type: 'post',
+                        data: {id_convidado: convidado.attr('id'), nome_convidado: convidado.text(), id_mesa: mesa, nome_mesa: mesaNome, lugares: mesaLugares, accao: 'colocarConvidado'},
+                        success: function (result) {
+                            if (result.trim() == 'erro'){
+                                console.log ("erro ao inserir convidado");
+                            } else if (result.trim() == 'lugares'){
+                                console.log ("Esta mesa já não tem lugares disponiveis");
+                            } else {
+                                convidado.removeClass('ui-draggable ui-draggable-handle').addClass('btn btn-danger').attr('disabled', 'disabled');
+                                convidado.draggable('disable');
+                                convidado.append(" <span class='tag-pill tag-warning pull-right'>Mesa nº " + mesa + "</span>");
+                                $("#sala div#"+mesa).find('span').text(result+'/'+mesaLugares);
+                                mesa = null;
+                            }
+
+                        }
+                    });
+                }
             }
         });
     });
 
-    $("#addTable").click(function () {
 
+    $("#addTable").click(function () {
 
 
         $.ajax({
@@ -33,7 +49,7 @@ $(document).ready(function () {
                 var result = result.trim();
                     console.log(result);
                     $("#sala").append("<div ondblclick='arranque(this)' lugares='6' class='mesa text-md-center align-middle'>" +
-                        "<h6 class='nomeMesa"+result+"' onclick='mostraInput("+result+")'><i class='fa fa-terminal' aria-hidden='true'></i> Mesa</h6>" +
+                        "<h6 class='nomeMesa"+result+"' onclick='mostraInput("+result+")'>Mesa nº "+result+"</h6>" +
                         "<i class='fa fa-users fa-3x' aria-hidden='true'></i>" +
                         "<button type='button' class='btn btn-danger btn-sm'>Convidados <span class='tag-pill tag-warning'></span></button></div>")
                         .find('span').text('0/6');
@@ -62,6 +78,8 @@ $(document).ready(function () {
                     drop: function () {
                         if ($(this).hasClass('mesa')){
                             mesa = $(this).attr('id');
+                            mesaNome = $(this).find('h6').text();
+                            mesaLugares = $(this).attr('lugares');
                         }else{
                             mesa = null;
                         }

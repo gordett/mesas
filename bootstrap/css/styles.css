@@ -10,7 +10,7 @@
 }
 
 .mesa {
-    width: 150px;
+    width: auto;
     height: auto;
     padding: 0.5em;
     float: left;

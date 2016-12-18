@@ -17,10 +17,16 @@ switch ($_POST['accao']){
     break;
 
     case 'editarPosicaoMesa';
-
         extract($_POST);
         $result = $rsConvidados->editarPosicaoMesa($id, $x, $y);
         return $result;
     break;
+
+    case 'colocarConvidado';
+        extract($_POST);
+        $result = $rsConvidados->colocarConvidado($id_convidado, $nome_convidado, $id_mesa, $nome_mesa, $lugares);
+        return $result;
+        break;
+
 }
 ?>
